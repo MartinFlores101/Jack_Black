@@ -7,6 +7,13 @@
 
 */
 
+class Card {
+    Card (type, valor) {
+        this.type = type;
+        this.valor = valor;
+    }
+}
+
 DECK = [
     new Card('D', 1), new Card('D', 2), new Card('D', 3), new Card('D', 4), new Card('D', 5),
     new Card('D', 6), new Card('D', 7), new Card('D', 8), new Card('D', 9), new Card('D', 10),
@@ -23,14 +30,7 @@ DECK = [
     new Card('C', 1), new Card('C', 2), new Card('C', 3), new Card('C', 4), new Card('C', 5),
     new Card('C', 6), new Card('C', 7), new Card('C', 8), new Card('C', 9), new Card('C', 10),
     new Card('C', 11), new Card('C', 12), new Card('C', 13),
-]
-
-class Card {
-    Card (type, valor) {
-        this.type = type;
-        this.valor = valor;
-    }
-}
+];
 
 function reborujarDeck() {
     DECK = DECK.sort( function () {
