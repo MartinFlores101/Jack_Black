@@ -7,12 +7,10 @@
 
 */
 
-class Card {
-    Card (type, valor) {
-        this.type = type;
-        this.valor = valor;
-    }
-}
+function Card (type, value) {
+    this.type = type;
+    this.value = value;
+};
 
 DECK = [
     new Card('D', 1), new Card('D', 2), new Card('D', 3), new Card('D', 4), new Card('D', 5),
@@ -37,5 +35,7 @@ function reborujarDeck() {
         return Math.random()-0.5
     });
 
-    console.log(DECK);
+    DECK.forEach(card => {
+        console.log(card)
+    });
 }
