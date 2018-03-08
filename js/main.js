@@ -30,6 +30,9 @@ DECK = [
     new Card('C', 11), new Card('C', 12), new Card('C', 13),
 ];
 
+DEALER_HAND = [];
+USER_HAND = [];
+
 function reborujarDeck() {
     DECK = DECK.sort( function () {
         return Math.random()-0.5
