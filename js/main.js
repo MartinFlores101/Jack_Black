@@ -7,6 +7,10 @@
 
 */
 
+var hd ;
+var hu ;
+var t;
+
 function Card (type, value) {
     this.type = type;
     this.value = value;
@@ -49,6 +53,34 @@ function reborujarDeck() {
 }
 
 // NITRAM101
+function robarUsuario(){
+    userHandCont=USER_HAND.length;
+    
+    hu = document.getElementById('cardsuser');
+    
+    t = DECK.length-1;
+    
+    USER_HAND.push (
+        DECK[t]
+    )
+    DECK.pop();
+    hu.innerHTML += '<img style="height:114px;weight:22px;" src="../Card/'+
+        (USER_HAND[userHandCont].value) + '' + USER_HAND[userHandCont].type +'.png">';     
+}
+
+function robarDealer(){
+    dealerHandCont=DEALER_HAND.length;
+    hd = document.getElementById('handdealer');
+    t = DECK.length-1;
+    DEALER_HAND.push (
+        DECK[t]
+    );
+
+    DECK.pop();
+    hd.innerHTML += '<img style="height:114px;weight:22px;" src="../Card/'+
+        (DEALER_HAND[dealerHandCont].value) + '' + DEALER_HAND[dealerHandCont].type +'.png">';
+}
+
 
 // JOHNSALAS8
 function getSum(hand) {
@@ -80,38 +112,24 @@ function isBlackJack(hand) {
 }
 
 function dealOut () {
+    
     reborujarDeck();
-    var hd = document.getElementById('handdealer');
-    var hu = document.getElementById('cardsuser');
+    //alert("DEALER_HAND " + DEALER_HAND.length);
 
-    var t = DECK.length-1;
-    DEALER_HAND.push (
-        DECK[t]
-    );
-    DECK.pop();
-    hd.innerHTML += '<img style="height:114px;weight:22px;" src="../Card/'+
-        (DEALER_HAND[0].value) + '' + DEALER_HAND[0].type +'.png">';
-    
-    t = DECK.length-1;
-    USER_HAND.push (
-        DECK[t]
-    )
-    DECK.pop();
-    hu.innerHTML += '<img style="height:114px;weight:22px;" src="../Card/'+
-        (USER_HAND[0].value) + '' + USER_HAND[0].type +'.png">';
-    
-    t = DECK.length-1;
-    USER_HAND.push (
-        DECK[t]
-    )
-    DECK.pop();
-    hu.innerHTML += '<img style="height:114px;weight:22px;" src="../Card/'+
-        (USER_HAND[1].value) + '' + USER_HAND[1].type +'.png">';
+    //hd = document.getElementById('handdealer');
+    hu = document.getElementById('cardsuser');
 
+    robarDealer();
+    
+    robarUsuario();
+    
+    robarUsuario();
+      
     t = DECK.length-1;
     DEALER_HAND.push (
         DECK[t]
     );
     DECK.pop();
     hd.innerHTML += '<img style="height:114px;weight:22px;" src="../Card/back.png">';
+    
 }
