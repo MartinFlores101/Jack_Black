@@ -42,3 +42,7 @@ function reborujarDeck() {
         console.log(card)
     });*/
 }
+
+// NITRAM101
+
+// JOHNSALAS8
