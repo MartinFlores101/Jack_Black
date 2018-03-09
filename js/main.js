@@ -10,6 +10,11 @@
 function Card (type, value) {
     this.type = type;
     this.value = value;
+    if (this.value>=11 && this.value<=13) {
+        this.vreal = 10;
+    } else {
+        this.vreal = this.value;
+    }
 };
 
 DECK = [
@@ -49,10 +54,10 @@ function reborujarDeck() {
 function getSum(hand) {
     var sum = 0;
     hand.forEach(card => {
-        if (card.value>=11 || card.value>=13) {
+        if (card.value>=11 && card.value<=13) {
             sum += 10;
         } else { // faltaria hacerlo para los aces
-            sum += card.value;
+            sum += card.vreal;
         }
     });
     return sum;
