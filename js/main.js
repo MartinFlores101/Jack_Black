@@ -78,3 +78,40 @@ function isBlackJack(hand) {
         return false;
     }
 }
+
+function dealOut () {
+    reborujarDeck();
+    var hd = document.getElementById('handdealer');
+    var hu = document.getElementById('cardsuser');
+
+    var t = DECK.length-1;
+    DEALER_HAND.push (
+        DECK[t]
+    );
+    DECK.pop();
+    hd.innerHTML += '<img style="height:114px;weight:22px;" src="../Card/'+
+        (DEALER_HAND[0].value) + '' + DEALER_HAND[0].type +'.png">';
+    
+    t = DECK.length-1;
+    USER_HAND.push (
+        DECK[t]
+    )
+    DECK.pop();
+    hu.innerHTML += '<img style="height:114px;weight:22px;" src="../Card/'+
+        (USER_HAND[0].value) + '' + USER_HAND[0].type +'.png">';
+    
+    t = DECK.length-1;
+    USER_HAND.push (
+        DECK[t]
+    )
+    DECK.pop();
+    hu.innerHTML += '<img style="height:114px;weight:22px;" src="../Card/'+
+        (USER_HAND[1].value) + '' + USER_HAND[1].type +'.png">';
+
+    t = DECK.length-1;
+    DEALER_HAND.push (
+        DECK[t]
+    );
+    DECK.pop();
+    hd.innerHTML += '<img style="height:114px;weight:22px;" src="../Card/back.png">';
+}
