@@ -46,3 +46,14 @@ function reborujarDeck() {
 // NITRAM101
 
 // JOHNSALAS8
+function getSum(hand) {
+    var sum = 0;
+    hand.forEach(card => {
+        if (card.value>=11 || card.value>=13) {
+            sum += 10;
+        } else { // faltaria hacerlo para los aces
+            sum += card.value;
+        }
+    });
+    return sum;
+}
