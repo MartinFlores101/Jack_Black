@@ -62,3 +62,19 @@ function getSum(hand) {
     });
     return sum;
 }
+
+function isBlackJack(hand) {
+    if (hand.length==2) {
+        if (hand[0].value>=12 && hand[0].value<=13
+            && hand[1].value==11) {
+                return true;
+            } else if (hand[1].value>=12 && hand[1].value<=13
+            && hand[0].value==11) {
+                return true;
+            } else {
+                return false;
+            }
+    } else {
+        return false;
+    }
+}
