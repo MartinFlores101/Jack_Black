@@ -12,10 +12,12 @@ var hu ;
 var t;
 var sumU=0;
 var sumD=0;
+var globi=0;
 
-function Card (type, value) {
+function Card (type, value, up=true) {
     this.type = type;
     this.value = value;
+    this.up = up;
     if (this.value>=11 && this.value<=13) {
         this.vreal = 10;
     } else {
@@ -24,19 +26,19 @@ function Card (type, value) {
 };
 
 DECK = [
-    /*new Card('D', 1),*/ new Card('D', 2), new Card('D', 3), new Card('D', 4), new Card('D', 5),
+    new Card('D', 1), new Card('D', 2), new Card('D', 3), new Card('D', 4), new Card('D', 5),
     new Card('D', 6), new Card('D', 7), new Card('D', 8), new Card('D', 9), new Card('D', 10),
     new Card('D', 11), new Card('D', 12), new Card('D', 13),
 
-    /*new Card('C', 1),*/ new Card('C', 2), new Card('C', 3), new Card('C', 4), new Card('C', 5),
+    new Card('C', 1), new Card('C', 2), new Card('C', 3), new Card('C', 4), new Card('C', 5),
     new Card('C', 6), new Card('C', 7), new Card('C', 8), new Card('C', 9), new Card('C', 10),
     new Card('C', 11), new Card('C', 12), new Card('C', 13),
 
-    /*new Card('S', 1),*/ new Card('S', 2), new Card('S', 3), new Card('S', 4), new Card('S', 5),
+    new Card('S', 1), new Card('S', 2), new Card('S', 3), new Card('S', 4), new Card('S', 5),
     new Card('S', 6), new Card('S', 7), new Card('S', 8), new Card('S', 9), new Card('S', 10),
     new Card('S', 11), new Card('S', 12), new Card('S', 13),
 
-    /*new Card('H', 1),*/ new Card('H', 2), new Card('H', 3), new Card('H', 4), new Card('H', 5),
+    new Card('H', 1), new Card('H', 2), new Card('H', 3), new Card('H', 4), new Card('H', 5),
     new Card('H', 6), new Card('H', 7), new Card('H', 8), new Card('H', 9), new Card('H', 10),
     new Card('H', 11), new Card('H', 12), new Card('H', 13),
 ];
@@ -49,9 +51,6 @@ function reborujarDeck() {
         return Math.random()-0.5
     });
 
-    /*DECK.forEach(card => {
-        console.log(card)
-    });*/
 }
 
 // NITRAM101
@@ -82,7 +81,7 @@ function robarDealer(){
     );
 
     DECK.pop();
-    hd.innerHTML += '<img style="height:114px;weight:22px;" src="../Card/'+
+    hd.innerHTML += '<img class="carddealer" style="height:114px;weight:22px;" src="../Card/'+
         (DEALER_HAND[dealerHandCont].value) + '' + DEALER_HAND[dealerHandCont].type +'.png">';
     
     //alert("Actual: " + DEALER_HAND[dealerHandCont].value);
@@ -93,7 +92,10 @@ function getSumU() {
     userHandCont2=USER_HAND.length;
     if(USER_HAND[userHandCont2-1].value>10){
         sumU=sumU+10;
-    }else{
+    }else if(USER_HAND[userHandCont2-1].value==1){
+        sumU=sumU+11;
+    }
+    else{
         sumU=sumU+USER_HAND[userHandCont2-1].value;
     }
     
@@ -105,29 +107,81 @@ function getSumD() {
     userHandCont3=DEALER_HAND.length;
     if(DEALER_HAND[userHandCont3-1].value>10){
         sumD=sumD+10;
-    }else{
+    }else if(DEALER_HAND[userHandCont3-1].value==1){
+        sumD=sumD+11;
+    }
+    else{
         sumD=sumD+DEALER_HAND[userHandCont3-1].value;
     }
     
     //alert("SumaD: " + sumD);
+    cuentaDealer();
 }
 
-
-
 function cuentaUser(){
-    //var letrero;
-    //letrero = document.getElementById('mssg');
+    if(userHandCont2==2 && sumU == 21){
+        alert("JACK BLACK Usuario");
+        
+    }
     if(sumU>21){
-        //letrero.innerHTML += '<img style="height:22px;weight:22px;" src="../img/loser.png>';
-        alert("PIERDES");
+        for(i =0;i<userHandCont2;i++){
+            //alert("valor i: " + i + " " + USER_HAND[i].value)
+            if(USER_HAND[i].value==1){
+                USER_HAND[i].value =0;
+                sumU=sumU-10;
+                //alert("-10 " + sumU);
+                break;
+            }
+        }
+        if(sumU>21){
+            alert("PIERDES");
+        }
+        
+    }
+}
+
+function cuentaDealer(){
+    if(userHandCont3==2 && sumD == 21){
+        alert("BLACK JACK CASA | pierdes");
+    }
+    if(sumD>21){
+        for(i =0;i<userHandCont3;i++){
+            //alert("valor iD: " + i + " " + DEALER_HAND[i].value)
+            if(DEALER_HAND[i].value==1){
+                DEALER_HAND[i].value =0;
+                sumD=sumD-10;
+                break;
+            }
+        }
+        if(sumD>21){
+            //alert("GANAS DD");
+        }
+        
     }
 }
 
 function mePlanto(){
+
+    console.log(DEALER_HAND);
+    var cardd = document.getElementsByClassName('carddealer')
+    console.log(cardd);
+
+    for (let i = 0; i < DEALER_HAND.length; i++) {
+        if (!DEALER_HAND[i].up) {
+            cardd[i].src = '../Card/'+
+            (DEALER_HAND[i].value) + '' + DEALER_HAND[i].type +'.png';
+            break;
+        }
+    }
+
     //alert("ENTRA ");
-    while(sumD < sumU && sumD<17){
+    //alert("SumaU: " + sumU);
+    //alert("SumaD: " + sumD);
+    
+    while(sumD < sumU && sumD<17 && sumU <22){
         //alert("ENTRA NEW");
         robarDealer();
+        
     }
     if(sumU==sumD){
         alert("EMPATE");
@@ -142,7 +196,7 @@ function mePlanto(){
 
 
 function dealOut () {
-   
+    //location.reload(true);
     reborujarDeck();
     //alert("DEALER_HAND " + DEALER_HAND.length);
 
@@ -160,7 +214,8 @@ function dealOut () {
         DECK[t]
     );
     DECK.pop();
-    hd.innerHTML += '<img style="height:114px;weight:22px;" src="../Card/back.png">';
-    alert("Oculta: " + DEALER_HAND[dealerHandCont+1].value);
+    hd.innerHTML += '<img class="carddealer" style="height:114px;weight:22px;" src="../Card/back.png">';
+    DEALER_HAND[dealerHandCont+1].up = false;
+    //alert("Oculta: " + DEALER_HAND[dealerHandCont+1].value);
     getSumD();
 }
