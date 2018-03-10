@@ -10,6 +10,8 @@
 var hd ;
 var hu ;
 var t;
+var sumU=0;
+var sumD=0;
 
 function Card (type, value) {
     this.type = type;
@@ -65,7 +67,10 @@ function robarUsuario(){
     )
     DECK.pop();
     hu.innerHTML += '<img style="height:114px;weight:22px;" src="../Card/'+
-        (USER_HAND[userHandCont].value) + '' + USER_HAND[userHandCont].type +'.png">';     
+        (USER_HAND[userHandCont].value) + '' + USER_HAND[userHandCont].type +'.png">';    
+       
+    getSumU();
+        
 }
 
 function robarDealer(){
@@ -79,40 +84,65 @@ function robarDealer(){
     DECK.pop();
     hd.innerHTML += '<img style="height:114px;weight:22px;" src="../Card/'+
         (DEALER_HAND[dealerHandCont].value) + '' + DEALER_HAND[dealerHandCont].type +'.png">';
+    
+    //alert("Actual: " + DEALER_HAND[dealerHandCont].value);
+    getSumD();   
+}
+
+function getSumU() {
+    userHandCont2=USER_HAND.length;
+    if(USER_HAND[userHandCont2-1].value>10){
+        sumU=sumU+10;
+    }else{
+        sumU=sumU+USER_HAND[userHandCont2-1].value;
+    }
+    
+    //alert("SumaU: " + sumU);
+    cuentaUser();
+}
+
+function getSumD() {
+    userHandCont3=DEALER_HAND.length;
+    if(DEALER_HAND[userHandCont3-1].value>10){
+        sumD=sumD+10;
+    }else{
+        sumD=sumD+DEALER_HAND[userHandCont3-1].value;
+    }
+    
+    //alert("SumaD: " + sumD);
 }
 
 
-// JOHNSALAS8
-function getSum(hand) {
-    var sum = 0;
-    hand.forEach(card => {
-        if (card.value>=11 && card.value<=13) {
-            sum += 10;
-        } else { // faltaria hacerlo para los aces
-            sum += card.vreal;
-        }
-    });
-    return sum;
-}
 
-function isBlackJack(hand) {
-    if (hand.length==2) {
-        if (hand[0].value>=12 && hand[0].value<=13
-            && hand[1].value==11) {
-                return true;
-            } else if (hand[1].value>=12 && hand[1].value<=13
-            && hand[0].value==11) {
-                return true;
-            } else {
-                return false;
-            }
-    } else {
-        return false;
+function cuentaUser(){
+    //var letrero;
+    //letrero = document.getElementById('mssg');
+    if(sumU>21){
+        //letrero.innerHTML += '<img style="height:22px;weight:22px;" src="../img/loser.png>';
+        alert("PIERDES");
     }
 }
 
+function mePlanto(){
+    //alert("ENTRA ");
+    while(sumD < sumU && sumD<17){
+        //alert("ENTRA NEW");
+        robarDealer();
+    }
+    if(sumU==sumD){
+        alert("EMPATE");
+    }else if(sumD < sumU || sumD>21){
+        alert("GANAS");
+    }else{
+        alert("PIERDES");
+    }
+}
+
+// JOHNSALAS8
+
+
 function dealOut () {
-    
+   
     reborujarDeck();
     //alert("DEALER_HAND " + DEALER_HAND.length);
 
@@ -131,5 +161,6 @@ function dealOut () {
     );
     DECK.pop();
     hd.innerHTML += '<img style="height:114px;weight:22px;" src="../Card/back.png">';
-    
+    alert("Oculta: " + DEALER_HAND[dealerHandCont+1].value);
+    getSumD();
 }
